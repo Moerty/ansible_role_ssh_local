@@ -4,7 +4,9 @@
     - name: Ensure public key is present for "{{ host_key.host }}"
       ansible.builtin.copy:
         dest: "~/.ssh/{{ host_key.host }}.pub"
-        content: "{{ host_key.public_key }}"
+        content: >
+          {{ host_key.public_key }}
+          {{ host_key.user }}@{{ host_key.host }}
         mode: "0600"
 
     - name: "Create SSH config for {{ host_key.host }}"

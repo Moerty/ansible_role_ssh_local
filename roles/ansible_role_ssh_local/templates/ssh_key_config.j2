@@ -1,9 +1,4 @@
-# {{ ansible_managed }}
-{% set git_commit = lookup('pipe', 'git rev-parse --short HEAD', errors='ignore') | default('', true) %}
-{% if git_commit %}
-# commit: {{ git_commit }}
-{% endif %}
-
+{% include 'roles/ansible_role_common_templates/templates/prefix.j2' %}
 
 Host {{ host_key.host }}
 IdentityFile ~/.ssh/{{ host_key.host }}.pub

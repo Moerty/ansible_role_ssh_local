@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+{% set git_commit = lookup('pipe', 'git rev-parse --short HEAD', errors='ignore') | default('', true) %}
+{% if git_commit %}# commit: {{ git_commit }}{% endif %}
