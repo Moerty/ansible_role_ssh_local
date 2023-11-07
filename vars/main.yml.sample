@@ -1,0 +1,19 @@
+---
+# vars file for ansible_role_ssh_keys
+
+ansible_role_ssh_local_list:
+  - host: host1.example.com
+    user: alice
+    port: 22
+    public_key: "{{ lookup('file', '/pfad/zum/lokalen/private_key_host1.pem') }}"
+  - host: host2.example.com
+    user: bob
+    port: 22
+    public_key: "{{ lookup('pipe', 'cat /pfad/zum/private_key_host2.pem') }}"
+  - host: host3.example.com
+    user: carol
+    port: 22
+    public_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEA7yn3...
+      -----END RSA PRIVATE KEY-----

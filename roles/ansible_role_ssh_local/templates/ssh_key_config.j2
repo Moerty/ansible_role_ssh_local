@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+{% set git_commit = lookup('pipe', 'git rev-parse --short HEAD', errors='ignore') | default('', true) %}
+{% if git_commit %}
+# commit: {{ git_commit }}
+{% endif %}
+
+
+Host {{ host_key.host }}
+IdentityFile ~/.ssh/{{ host_key.host }}.pub
+User {{ host_key.user }}
+
+{% if host_key.port %}
+Port {{ host_key.port }}
+{% endif %}
+
+PubKeyAuthentication true
+IdentitiesOnly true
+# Other SSH options can be added here

@@ -1,0 +1,14 @@
+---
+- name: Deploy public keys and host specific ssh config
+  block:
+    - name: Ensure public key is present for "{{ host_key.host }}"
+      ansible.builtin.copy:
+        dest: "~/.ssh/{{ host_key.host }}.pub"
+        content: "{{ host_key.public_key }}"
+        mode: "0600"
+
+    - name: "Create SSH config for {{ host_key.host }}"
+      ansible.builtin.template:
+        dest: "~/.ssh/include/{{ host_key.host }}_ssh_config"
+        src: ssh_key_config.j2
+        mode: "0644"

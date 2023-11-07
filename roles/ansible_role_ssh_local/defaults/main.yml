@@ -1,0 +1,20 @@
+---
+# defaults file for ansible_role_ssh_keys
+ansible_role_ssh_local_list: []
+### From file on ansible host
+  # - host: host1.example.com
+  #   user: alice
+  #   public_key: "{{ lookup('file', '/pfad/zum/lokalen/private_key_host1.pem') }}"
+
+### From command output on ansible host
+  # - host: host2.example.com
+  #   user: bob
+  #   private_key: "{{ lookup('pipe', 'cat /pfad/zum/private_key_host2.pem') }}"
+
+### As plaintext
+  # - host: host3.example.com
+  #   user: carol
+  #   private_key: |
+  #     -----BEGIN RSA PRIVATE KEY-----
+  #     MIIEowIBAAKCAQEA7yn3...
+  #     -----END RSA PRIVATE KEY-----

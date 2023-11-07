@@ -1,0 +1,31 @@
+---
+- name: Set ansible managed
+  ansible.builtin.set_fact:
+    ansible_managed: "Ansible managed: {file} modified on %Y-%m-%d %H:%M:%S by {uid} on {host}"
+
+- name: Setup SSH configuration for hosts
+  become: false
+  block:
+    - name: Ensure .ssh directory exists
+      ansible.builtin.file:
+        path: "{{ ssh_dir_to_create }}"
+        state: directory
+        mode: '0700'
+      loop:
+        - "~/.ssh"
+        - "~/.ssh/include"
+      loop_control:
+        loop_var: ssh_dir_to_create
+
+    - name: Create SSH config file with 'Include' directive
+      ansible.builtin.template:
+        dest: "~/.ssh/config"
+        src: "ssh_config.j2"
+        mode: '0644'
+
+- name: Setup each ssh key
+  ansible.builtin.include_tasks:
+    file: "ssh_key.yml"
+  loop: "{{ ansible_role_ssh_local_list }}"
+  loop_control:
+    loop_var: host_key
